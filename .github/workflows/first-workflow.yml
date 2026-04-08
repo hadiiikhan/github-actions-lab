@@ -1,4 +1,4 @@
-name: My First Workflow
+name: Run Python Tests
 
 on:
   push:
@@ -7,8 +7,15 @@ on:
     branches: [main]
 
 jobs:
-  hello-world:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Print message
-        run: echo "Hello, GitHub Actions!"
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pytest
+      - name: Run tests
+        run: pytest
